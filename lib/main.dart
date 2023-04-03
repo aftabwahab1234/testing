@@ -316,11 +316,11 @@
 //   }
 // }
 
-import 'dart:async';
-import 'package:flutter/material.dart';
-//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+// import 'dart:async';
+// import 'package:flutter/material.dart';
+// //import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:path/path.dart';
+// import 'package:sqflite/sqflite.dart';
 
 // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 //     FlutterLocalNotificationsPlugin();
@@ -336,52 +336,41 @@ import 'package:sqflite/sqflite.dart';
 //   );
 // }
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // Get a location using getDatabasesPath
-  var databasesPath = await getDatabasesPath();
-  String path = join(databasesPath, 'Students.db');
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   // Get a location using getDatabasesPath
+//   var databasesPath = await getDatabasesPath();
+//   String path = join(databasesPath, 'demo.db');
 
-// Delete the database
-  //await deleteDatabase(path);
-  Database db = await openDatabase(
-    path, version: 1,
-    //     onCreate: (Database db, int version) async {
-    //   // When creating the db, create the table
-    //   await db.execute(
-    //       'CREATE TABLE Test (id INTEGER PRIMARY KEY, name TEXT, age INTEGER)');
-    // }
-  );
+// // Delete the database
+//   //await deleteDatabase(path);
+//   Database db = await openDatabase(
+//     path,
+//     version: 1,
+//   );
+//   // await db.transaction((txn) async {
+//   //   int id1 = await txn.rawInsert(
+//   //       'INSERT INTO Test(name, value, num) VALUES("some name", 1234, 456.789)');
+//   //   print('inserted1: $id1');
+//   //   int id2 = await txn.rawInsert(
+//   //       'INSERT INTO Test(name, value, num) VALUES(?, ?, ?)',
+//   //       ['another name', 12345678, 3.1416]);
+//   //   print('inserted2: $id2');
+//   // });
+//   //Insert the data
 
-  // await db.transaction((txn) async {
-  //   int id1 = await txn
-  //       .rawInsert('INSERT INTO Test(name, age) VALUES("some name", 1234)');
-  //   print('inserted1: $id1');
-  //   // int id2 = await txn.rawInsert(
-  //   //     'INSERT INTO Test(name, value, num) VALUES(?, ?, ?)',
-  //   //     ['another name', 12345678, 3.1416]);
-  //   // print('inserted2: $id2');
-  // });
-  List<Map> list = await db.rawQuery('SELECT * FROM Test');
-  print(list);
+//   await db.rawInsert(
+//       'INSERT INTO Test(name, value, num) VALUES("aftab wahab", 1234, 456.789)');
+//   await db
+//       .insert("Test", {"name": "aftab khan", "value": "testing", "num": 50});
 
-  db.close();
+//   //Get the data
+//   List<Map> list = await db.rawQuery('SELECT * FROM Test');
 
-  //await initialize(flutterLocalNotificationsPlugin);
-  // MainCake newCake = new MainCake();
-  // //non-private property -  randomPieceOfCakes
-  // print(newCake.randomPieceOfCakes);
+//   print(list);
 
-  // //private property - piece of cake
-  // //print(newCake._pieceOfCake1); // private property error
-
-  // // non-private private - piece of cake
-  // print(newCake.pieceOfCake2);
-
-  // runApp(
-  //   new MaterialApp(home: new MyApp()),
-  // );
-}
+//   db.close();
+// }
 
 // class MyApp extends StatefulWidget {
 //   @override
@@ -444,3 +433,267 @@ void main() async {
 //   //   );
 //   // }
 // }
+
+// import 'dart:io';
+
+// import 'package:flutter/material.dart';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:flutter/services.dart' show rootBundle;
+
+// void main() {
+//   runApp(const MaterialApp(
+//     title: 'Testing',
+//     home: Filehandling(),
+//   ));
+// }
+
+// class Filehandling extends StatefulWidget {
+//   const Filehandling({Key? key}) : super(key: key);
+
+//   @override
+//   State<Filehandling> createState() => _FilehandlingState();
+// }
+
+// class _FilehandlingState extends State<Filehandling> {
+//   Future<String> loadAsset() async {
+//     return await rootBundle.loadString('assets/data.txt');
+//   }
+
+//   Future<String> getlocalpath() async {
+//     Directory path = await getApplicationDocumentsDirectory();
+//     return path.path;
+//   }
+
+//   Future<File> createfile() async {
+//     final localfile = await getlocalpath();
+//     File file = File('$localfile/data2.txt');
+//     return file.create();
+//   }
+
+//   Future<File> getlocalfile() async {
+//     final localfile = await getlocalpath();
+//     return File('$localfile/data1.txt');
+//     // return file.create();
+//   }
+
+//   Future<String> readfile() async {
+//     try {
+//       final file = await getlocalfile();
+//       String contents = await file.readAsString();
+//       print("$contents");
+//       return contents;
+//     } catch (e) {
+//       print("readfile error is $e");
+//       return "";
+//     }
+//   }
+
+//   Future<File> writefile(String data) async {
+//     final file = await getlocalfile();
+//     //File file = File('$localfile/data1.txt');
+
+//     // Write the file
+//     return file.writeAsString('$data');
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Container(
+//         width: 410,
+//         height: 900,
+//         color: Colors.amberAccent,
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           children: [
+//             InkWell(
+//               onTap: () async {
+//                 await getlocalpath().catchError((e) {
+//                   print(e);
+//                 });
+//               },
+//               child: Text('get path'),
+//             ),
+//             Container(
+//               height: 50,
+//             ),
+//             InkWell(
+//               onTap: () async {
+//                 await createfile().catchError((e) {
+//                   print(e);
+//                 });
+//               },
+//               child: Text('create file'),
+//             ),
+//             Container(
+//               height: 50,
+//             ),
+//             InkWell(
+//               onTap: () async {
+//                 await getlocalfile().catchError((e) {
+//                   print(e);
+//                 });
+//               },
+//               child: Text('get local'),
+//             ),
+//             Container(
+//               height: 50,
+//             ),
+//             InkWell(
+//               onTap: () async {
+//                 await writefile(
+//                         "aftab wahab app developer. \n Having experience of almost 4 years in flutter.testing")
+//                     .catchError((e) {
+//                   print(e);
+//                 });
+//               },
+//               child: Text('write data'),
+//             ),
+//             Container(
+//               height: 50,
+//             ),
+//             InkWell(
+//               onTap: () async {
+//                 await readfile();
+//                 // await loadAsset().then((value) {
+//                 //   print("value \n$value");
+//                 // });
+//               },
+//               child: Text('read file'),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+import 'package:firebasetesting/sample.dart';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  /// Determine the current position of the device.
+  ///
+  /// When the location services are not enabled or permissions
+  /// are denied the `Future` will return an error.
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition();
+  }
+
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: MapSample(
+      latitude: 36.456410,
+      longitude: 10.729790,
+    )
+        // Scaffold(
+        //     appBar: AppBar(
+        //       title: const Text('Maps Sample App'),
+        //       backgroundColor: Colors.green[700],
+        //     ),
+        //  body:
+        //Center(
+        // child: Column(
+        //   children: [
+        //     Container(
+        //         color: Colors.red,
+        //         height: 50,
+        //         width: 100,
+        //         child: Center(child: Text("1"))),
+        //     Container(height: 50, child: Text("2")),
+        //     Container(height: 50, child: Text("3")),
+        //   ],
+        // ),
+
+        // child:
+        // Container(
+        //   width: 200,
+        //   height: 50,
+        //   color: Colors.amberAccent,
+        //   child: InkWell(
+        //     onTap: () async {
+        //       Position position = await Geolocator.getCurrentPosition(
+        //           desiredAccuracy: LocationAccuracy.high);
+        //       print("position.latitude ${position.latitude}");
+        //       print("position.longitude ${position.longitude}");
+
+        //       // await Geolocator.getLocationAccuracy().catchError((e) {
+        //       //   print(e);
+        //       // }).whenComplete(() => print("completed"));
+        //       // await Geolocator.isLocationServiceEnabled();
+        //       // await _determinePosition().then((value) {
+        //       //   print(value);
+        //       // });
+        //       // await Geolocator.getCurrentPosition().then((value) {
+        //       //   print(value.latitude);
+        //       // });
+        //     },
+        //     child: const Center(child: Text("Get position")),
+        //   ),
+        // ),
+        //  )
+        // GoogleMap(
+        //   onMapCreated: _onMapCreated,
+        //   initialCameraPosition: CameraPosition(
+        //     target: _center,
+        //     zoom: 11.0,
+        //   ),
+        // ),
+        //    ),
+        );
+  }
+}
